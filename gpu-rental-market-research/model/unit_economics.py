@@ -84,7 +84,7 @@ class Site:
         return (1 - self.gen_share) * self.grid_kwh + self.gen_share * self.gen_kwh
 
 
-RAMP = [0.25, 0.6]  # utilization multiplier in months 1-2 while waiting for verification [09]
+RAMP = [0.5, 0.75]  # months 1-2: unverified new hosts run ~45-50% vs ~82% verified [01][09]
 
 
 def cashflows(rig: Rig, site: Site, path: list[float]) -> list[float]:
@@ -154,7 +154,8 @@ SITES = [
 
 # ---------------------------------------------------------------------------
 # RIGS  (4-GPU boxes unless noted)
-# list_price = Vast.ai median for the GPU minus a 10% LATAM discount [01][06][09]
+# list_price = live Vast.ai renter-price median (2026-11-14) x 0.95 LATAM factor [01][06][09]
+# Vast host receives ~75% of the renter price (inferred from API, [01]) -> platform_fee=0.25
 # ---------------------------------------------------------------------------
 RIGS = [
     Rig("Old CPU server (R730, 256 GB, no GPU) on Akash", gpus=0, gpu_unit_price=0,
@@ -163,29 +164,29 @@ RIGS = [
         resale_pct_36m=0.35,
         note="Akash default bids = $294/mo if 100% leased; unaudited CPU providers ~1.5% utilized [05]"),
     Rig("4x V100 16GB (old 4U GPU server)", gpus=4, gpu_unit_price=400, host_cost=1200,
-        landed_mult=1.25, watts_load=1350, watts_idle=380, list_price=0.09 * 0.9,
-        utilization=0.45, platform_fee=0.20, resale_pct_36m=0.05, life_months=18,
+        landed_mult=1.25, watts_load=1350, watts_idle=380, list_price=0.08 * 0.95,
+        utilization=0.45, platform_fee=0.25, resale_pct_36m=0.05, life_months=18,
         note="Volta dropped by CUDA 13 / PyTorch 2.15 [10]"),
     Rig("4x RTX 3090", gpus=4, gpu_unit_price=1550, host_cost=1700, landed_mult=1.20,
-        watts_load=1600, watts_idle=280, list_price=0.22 * 0.9, utilization=0.60,
-        platform_fee=0.20, resale_pct_36m=0.30,
+        watts_load=1600, watts_idle=280, list_price=0.213 * 0.95, utilization=0.65,
+        platform_fee=0.25, resale_pct_36m=0.30,
         note="host needs >=96 GB RAM (95% of VRAM rule) + x16 slots [10]"),
     Rig("4x RTX 4090", gpus=4, gpu_unit_price=3300, host_cost=2000, landed_mult=1.20,
-        watts_load=2000, watts_idle=300, list_price=0.52 * 0.9, utilization=0.65,
-        platform_fee=0.20, resale_pct_36m=0.35),
+        watts_load=2000, watts_idle=300, list_price=0.48 * 0.95, utilization=0.65,
+        platform_fee=0.25, resale_pct_36m=0.35),
     Rig("4x RTX 5090", gpus=4, gpu_unit_price=5500, host_cost=2400, landed_mult=1.20,
-        watts_load=2500, watts_idle=340, list_price=0.70 * 0.9, utilization=0.65,
-        platform_fee=0.20, resale_pct_36m=0.40),
+        watts_load=2500, watts_idle=340, list_price=0.667 * 0.95, utilization=0.65,
+        platform_fee=0.25, resale_pct_36m=0.40),
     Rig("4x A100 80GB PCIe on Vast", gpus=4, gpu_unit_price=11000, host_cost=2400,
-        landed_mult=1.20, watts_load=1550, watts_idle=360, list_price=0.85 * 0.9,
-        utilization=0.65, platform_fee=0.20, resale_pct_36m=0.30),
+        landed_mult=1.20, watts_load=1550, watts_idle=360, list_price=0.85 * 0.95,
+        utilization=0.65, platform_fee=0.25, resale_pct_36m=0.30),
     Rig("4x A100 80GB PCIe on Akash/Lium", gpus=4, gpu_unit_price=11000, host_cost=2400,
         landed_mult=1.20, watts_load=1550, watts_idle=360, list_price=1.27,
         utilization=0.60, platform_fee=0.0, resale_pct_36m=0.30,
         note="Akash median $1.49 (no fee) / Lium ~$927/mo incl. emissions, cut 15-25% [04]"),
     Rig("4x H100 PCIe 80GB (Vast/Akash/Lium blend)", gpus=4, gpu_unit_price=25000, host_cost=3000,
         landed_mult=1.20, watts_load=1750, watts_idle=400, list_price=2.10,
-        utilization=0.70, platform_fee=0.10, resale_pct_36m=0.25,
+        utilization=0.70, platform_fee=0.15, resale_pct_36m=0.25,
         note="used H100 PCIe ~$18-35k late 2026 (web search, ESTIMATE); Vast H100 SXM $2.30, Akash $2.56 [04][06]"),
 ]
 
