@@ -362,7 +362,7 @@ How to read this:
 **Payback illustration (ESTIMATE; hardware prices are for other agents to confirm):** payback months = (GPU + share of chassis/PSU/CPU/RAM/SSD) ÷ monthly net.
 - Used 3090 at about $700 all-in per GPU: **~18 months typical, ~9 optimistic, >5 years conservative.**
 - Used 4090 at about $1,900 all-in: **~20 months typical, ~10 optimistic.**
-- Used V100 or P40 at about $150–250: **12–20 months typical**, but on very thin absolute dollars ($13–16/month). These cards also face a CUDA and feature support cliff and are not the AI workloads renters want.
+- Used V100 or P40 at about $150–250: **10–20 months typical**, but on very thin absolute dollars ($13–16/month). These cards also face a CUDA and feature support cliff and are not the AI workloads renters want.
 
 ---
 
@@ -390,7 +390,7 @@ How to read this:
 7. **Scale matters for both verification and the datacenter tier.**
    - Fleets of **4–8 identical GPUs per box** rank and verify better, and 8× bundles get about 2× the search volume.
    - The higher-priced "Secure Cloud" tier (datacenter median price 2.4× community) needs ISO 27001, a registered business and ≥5 servers. This is plausible only via colocation in a certified LATAM datacenter, for example in Bogotá or Quito, rather than a home or warehouse site.
-8. **Realistic unit economics** (verified, typical case, at $0.10/kWh, per GPU per month, before capex and internet): 3090 about $40, 4090 about $97, 5090 about $140, A100 PCIe about $150. A 32-GPU fleet of used 3090s grosses roughly **$1,800/month typical and $3,300 optimistic**. A fixed 1 Gbps symmetric business line plus colocation or power infrastructure can consume a large share of that at small scale.
+8. **Realistic unit economics** (verified, typical case, at $0.10/kWh, per GPU per month, before capex and internet): 3090 about $40, 4090 about $97, 5090 about $140, A100 PCIe about $150. A 32-GPU fleet of used 3090s brings in roughly **$1,800/month typical and $3,300 optimistic in host revenue before power**, or about $1,300 and $2,550 after power at $0.10/kWh. A fixed 1 Gbps symmetric business line plus colocation or power infrastructure can consume a large share of that at small scale.
 
 ---
 
@@ -407,7 +407,7 @@ How to read this:
 **Snapshot caveats.**
 - "Occupied" = not available for **on-demand** rental. It can include **self-rentals** by hosts, which are free and allowed by Vast, and reserved contracts.
 - It excludes interruptible (bid) usage and hosts' default jobs. In other words, **occupancy ≠ paid third-party utilization** and is an upper bound for a new host.
-- Prices are list asks, not transaction prices.
+- Prices are list asks, not transaction prices. Hosts can offer **reserved discounts of up to 50%** for pre-paid commitments (docs.vast.ai/guides/reference/faq/rental-types.md), so realised $/h can sit below list.
 - It is a single weekend timepoint, and offline or unlisted machines are invisible. Survivorship bias also applies: hosts who quit because of low earnings are not in the sample.
 
 **Gaps.**
